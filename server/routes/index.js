@@ -1,5 +1,4 @@
 import router from 'express-promise-router';
-import cors from 'cors';
 import { userRoutes } from './user';
 
 
@@ -10,4 +9,4 @@ export const routes = () => {
   userRoutes(route);
 
   return route;
-}
+};

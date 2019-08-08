@@ -1,36 +1,35 @@
-import sequelize from "sequelize";
 import bcrypt from "bcrypt";
-import connection from ".";
+import connection from "./index";
+import {BOOLEAN, STRING} from "sequelize";
 export const User = connection.define(
   "User",
   {
     id: {
-      type: sequelize.STRING,
-      unigue: true,
+      type: STRING,
       primaryKey: true
     },
     firstname: {
-      type: sequelize.STRING,
+      type: STRING,
       allowNull: false
     },
     lastname: {
-      type: sequelize.STRING,
+      type: STRING,
       allowNull: false
     },
     email: {
-      type: sequelize.STRING,
+      type: STRING,
       validate: {
         isEmail: { args: true, msg: "Provide a valid email." }
       }
     },
     password: {
-      type: sequelize.STRING,
+      type: STRING,
       validate: {
         len: { args: [8], msg: "Password should be a minimum of 8 characters." }
       }
     },
     verified: {
-      type: sequelize.BOOLEAN,
+      type: BOOLEAN,
       defaultValue: false
     }
   },

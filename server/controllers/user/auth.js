@@ -1,4 +1,4 @@
-import sequelize from "sequelize";
+import { Op } from "sequelize";
 
 import connection from "../../models";
 import { User } from "../../models/user";
@@ -7,15 +7,15 @@ import { signToken } from "../../helpers/jwt";
 import bcrypt from "bcrypt";
 
 const db = connection.sync();
-const Op = sequelize.Op;
+const op = Op;
 
 export default class AuthController {
-  static signUp = (req, res, next) => {
-    db.then(async resp => {
+  static signUp = (req, res) => {
+    db.then(async () => {
       User.findAll({
         where: {
           email: {
-            [Op.or]: [req.body.email]
+            [op.or]: [req.body.email]
           }
         }
       }).done(
