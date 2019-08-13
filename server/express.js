@@ -4,6 +4,7 @@ import compress from 'compression';
 import helmet from 'helmet';
 import cors from 'cors';
 import logger from 'morgan';
+require('./config/passport.js');
 
 const app = express();
 

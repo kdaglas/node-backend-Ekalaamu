@@ -62,4 +62,17 @@ export default class AuthController {
       )
     });
   };
+
+  static googleAuth = (req, res) => {
+      console.log(req.user);
+      return res.status(201).send(req.user);
+  };
+
+  static facebookAuth = (req, res) => {
+    return res.status(201).send(req.user);
+  };
+
+  static linkedInAuth = (req, res) => {
+      return res.status(201).send(req.user);
+  }
 }

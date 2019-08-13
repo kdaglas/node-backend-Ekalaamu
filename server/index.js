@@ -16,10 +16,6 @@ db.authenticate()
 // All routes
 app.use('/api/v1/', routes());
 
-app.get('/', (req, res) => {
-    res.send('Ekalaamu!')
-});
-
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, ()=>console.log(`server has started on port ${PORT}`));
