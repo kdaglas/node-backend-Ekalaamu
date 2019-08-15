@@ -9,7 +9,7 @@ dotenv.config();
 db.authenticate()
   .then(()=> {
       console.log(`successfully connected to the ${process.env.DATABASE} `);
-      db.sync({ force: false, logging: false})}
+      db.sync({ force: true, logging: false})}
   )
   .catch(err=>console.log('Error' + err));
 

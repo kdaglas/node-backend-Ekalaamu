@@ -4,42 +4,44 @@ import {BOOLEAN, STRING} from "sequelize";
 export const User = connection.define(
   "User",
   {
-    id: {
-      type: STRING,
-      primaryKey: true
-    },
-    firstname: {
-      type: STRING,
-      allowNull: false
-    },
-    lastname: {
-      type: STRING,
-      allowNull: false
-    },
-    email: {
-      type: STRING,
-      validate: {
-        isEmail: { args: true, msg: "Provide a valid email." }
+      id: {
+          type: STRING,
+          primaryKey: true
+      },
+      strategy: {
+          type: STRING,
+          allowNull: false
+      },
+      firstName: {
+          type: STRING,
+          allowNull: false
+      },
+      lastName: {
+          type: STRING,
+          allowNull: false
+      },
+      email: {
+          type: STRING,
+          allowNull: true
+      },
+      password: {
+          type: STRING,
+          allowNull: true
+      },
+      verified: {
+          type: BOOLEAN,
+          defaultValue: false
       }
-    },
-    password: {
-      type: STRING,
-      validate: {
-        len: { args: [8], msg: "Password should be a minimum of 8 characters." }
-      }
-    },
-    verified: {
-      type: BOOLEAN,
-      defaultValue: false
-    }
   },
   {
-    hooks: {
-      afterValidate: user => {
-        user.id = bcrypt.hashSync(user.email, 8);
-        user.password = bcrypt.hashSync(user.password, 8);
+      hooks: {
+          afterValidate: user => {
+              user.id = user.strategy === 'local'
+                ? bcrypt.hashSync(user.email, 8)
+                : user.socialId;
+              user.password = bcrypt.hashSync(user.password, 8);
+          }
       }
-    }
   }
 );
 
