@@ -50,7 +50,6 @@ export default class AuthController {
 
     };
 
-
     static login = (req, res) => {
         const { password } = req.body;
         if (Object.keys(req.body).find(key => req.body[key] === '')) {
@@ -66,7 +65,7 @@ export default class AuthController {
             if (!result) {
                 return res.status(404).send({ errors: "User doesn't exist or email is invalid" })
             }
-            console.log(result.dataValues.password);
+
             bcrypt.compare(password, result.dataValues.password, (error, result) => result
               ? res.status(200).json({success: "Successfully logged in", token: signToken(result.id)})
               : res.status(404).send({ errors: "Password and email do not match for this user" })
@@ -75,12 +74,11 @@ export default class AuthController {
     };
 
     static googleAuth = (req, res) => {
-        console.log(req.user);
-        return res.status(201).send(req.user);
+        this.auth(res, req.user);
     };
 
     static facebookAuth = (req, res) => {
-        return res.status(201).send(req.user);
+        this.auth(res, req.user);
     };
 
     static linkedInAuth = (req, res) => {
@@ -88,6 +86,15 @@ export default class AuthController {
     };
 
     static twitterAuth = (req, res) => {
-        return res.status(201).send(req.user);
+        this.auth(res, req.user);
     };
+
+    static auth = (res, data) => {
+        const {id, firstName} = data;
+        return res.status(200).send({
+            firstName,
+            token: signToken(id),
+        });
+    };
+
 }

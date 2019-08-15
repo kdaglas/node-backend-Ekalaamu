@@ -36,10 +36,11 @@ export const User = connection.define(
   {
       hooks: {
           afterValidate: user => {
-              user.id = user.strategy === 'local'
-                ? bcrypt.hashSync(user.email, 8)
-                : user.socialId;
-              user.password = bcrypt.hashSync(user.password, 8);
+              if (user.strategy === 'local') {
+                  user.id = bcrypt.hashSync(user.email, 8);
+                  user.password = bcrypt.hashSync(user.password, 8);
+              }
+              user.id = user.socialId;
           }
       }
   }
