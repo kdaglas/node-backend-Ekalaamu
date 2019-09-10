@@ -14,8 +14,10 @@ db.authenticate()
   .catch(err=>console.log('Error' + err));
 
 // All routes
-app.use('/api/v1/', routes());
+app.use('/api/v1', routes());
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, ()=>console.log(`server has started on port ${PORT}`));
+
+export { app };

@@ -38,9 +38,9 @@ passport.use('linkedInToken', new LinkedInTokenStrategy({
     clientID: process.env.linkedInClientID,
     clientSecret: process.env.linkedInClientSecret,
     callbackURL: "http://localhost:4200/auth/callback",
-    scope: ['r_emailaddress', 'r_basicprofile']
 }, async (accessToken, refreshToken, profile, done) => {
     console.log(profile);
+    await newSocialAccount(profile, done);
     done(null, profile);
 }));
 
